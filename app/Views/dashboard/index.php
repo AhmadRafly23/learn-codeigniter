@@ -1,5 +1,5 @@
 <?= $this->extend("layouts/layout"); ?>
 
 <?= $this->section("content"); ?>
-<p>Ini Halaman Home</p>
+<p>Ini halaman Home</p>
 <?= $this->endSection(); ?>
