@@ -17,7 +17,7 @@
                 <?= $this->include("layouts/sidebar"); ?>
                 <div class="w-full min-h-screen flex flex-col ml-0 lg:ml-80">
                     <?= $this->include("layouts/navbar"); ?>
-                    <div class="flex-1 p-6">
+                    <div class="flex-none md:flex-1">
                         <?= $this->renderSection("content"); ?>
                     </div>
                 </div>
@@ -55,6 +55,7 @@
         </div>
     </div>
 </body>
+<script src="<?= base_url(); ?>/js/app.js"></script>
 <script>
     const route = window.location.pathname;
 

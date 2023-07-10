@@ -10,7 +10,7 @@ class Dashboard extends BaseController
 
     public function __construct()
     {
-        $this->comicModel = new \App\Models\ComicModel();
+        $this->comicModel = new ComicModel();
     }
 
     public function index()
@@ -45,6 +45,35 @@ class Dashboard extends BaseController
             "comic" => $comic
         ];
 
+        if (empty($data["comic"])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Comic $slug not found");
+        }
+
         return view("dashboard/detail", $data);
+    }
+
+    public function create()
+    {
+        $data = [
+            'header' => 'Comics App | Create',
+            "name" => "Create Comic"
+        ];
+
+        return view("dashboard/create", $data);
+    }
+
+    public function save()
+    {
+        $this->comicModel->save([
+            "title" => $this->request->getVar("title"),
+            "slug" => url_title($this->request->getVar("title"), "-", true),
+            "author" => $this->request->getVar("author"),
+            "publisher" => $this->request->getVar("publisher"),
+            "cover" => $this->request->getVar("cover")
+        ]);
+
+        session()->setFlashdata("flash", "disimpan");
+
+        return redirect()->to("/comic");
     }
 }

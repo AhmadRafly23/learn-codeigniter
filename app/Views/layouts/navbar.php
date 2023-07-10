@@ -5,7 +5,7 @@
         </svg>
     </label>
     <div class="flex-1">
-        <p class="font-bold text-xl"><?= $name; ?></p>
+        <p class="font-semibold text-xl"><?= $name; ?></p>
     </div>
     <div class="flex-none">
         <div class="dropdown dropdown-end">

@@ -31,6 +31,8 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get("/", "Dashboard::index");
 $routes->get("/comic", "Dashboard::comic");
+$routes->get("/comic/create", "Dashboard::create");
+$routes->post("/comic/save", "Dashboard::save");
 $routes->get("/comic/(:segment)", "Dashboard::detail/$1");
 
 /*
