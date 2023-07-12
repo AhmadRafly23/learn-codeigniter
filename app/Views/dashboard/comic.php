@@ -30,5 +30,5 @@
     </div>
 </div>
 <script>
-    const flashData = document.querySelector(" .flash-data").dataset.flashdata; if (flashData) { console.log(Swal); }; </script>
+    const flashData = document.querySelector(" .flash-data").dataset.flashdata; if (flashData) { Swal.fire( 'Good job!' , `Data berhasil ${flashData}`, 'success' )}; </script>
                                 <?= $this->endSection(); ?>

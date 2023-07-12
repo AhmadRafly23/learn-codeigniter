@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $header; ?></title>
     <link rel="stylesheet" href="/css/app.css">
+    <script src="<?= base_url(); ?>/js/app.js"></script>
 </head>
 
 <body>
@@ -55,7 +56,6 @@
         </div>
     </div>
 </body>
-<script src="<?= base_url(); ?>/js/app.js"></script>
 <script>
     const route = window.location.pathname;
 

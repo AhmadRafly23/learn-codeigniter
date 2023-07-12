@@ -22,4 +22,5 @@
         <button type="submit" class="btn btn-outline text-blue-700 hover:bg-blue-700 hover:border-blue-700">Submit</button>
     </form>
 </div>
+
 <?= $this->endSection(); ?>
