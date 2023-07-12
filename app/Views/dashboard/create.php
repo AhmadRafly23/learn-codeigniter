@@ -1,7 +1,7 @@
 <?= $this->extend("layouts/layout"); ?>
 
 <?= $this->section("content"); ?>
-<div class="p-6 w-1/3">
+<div class="p-6 w-2/5">
     <form action="/comic/save" method="post" class="space-y-4">
         <div class="flex justify-between items-center">
             <label for="">Title :</label>

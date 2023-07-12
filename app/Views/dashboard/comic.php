@@ -30,5 +30,19 @@
     </div>
 </div>
 <script>
-    const flashData = document.querySelector(" .flash-data").dataset.flashdata; if (flashData) { Swal.fire( 'Good job!' , `Data berhasil ${flashData}`, 'success' )}; </script>
+    const flashData = document.querySelector(" .flash-data").dataset.flashdata; const alert=document.querySelector('.alert'); const alertText=document.querySelector('.alert-text'); const showAlert=()=> {
+                                setTimeout(() => {
+                                alertText.innerHTML = `Data berhasil ${flashData}`;
+                                alert.classList.add("translate-y-0", "mt-4")
+                                }, 100);
+
+                                setTimeout(() => {
+                                alert.classList.remove("translate-y-0", "mt-4")
+                                }, 3000);
+                                };
+
+                                if(flashData){
+                                showAlert();
+                                };
+                                </script>
                                 <?= $this->endSection(); ?>
