@@ -12,9 +12,36 @@
             </div>
             <div class="space-x-1">
                 <a href="" class="btn btn-warning text-white border-none">Edit</a>
-                <a href="" class="btn btn-error text-white border-none">Delete</a>
+
+                <form action="/comic/<?= $comic["id"]; ?>" method="post" class="inline">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-error text-white border-none btn-delete">Delete</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const btnDelete = document.querySelector(".btn-delete");
+
+    btnDelete.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                btnDelete.parentElement.submit();
+            }
+        })
+    })
+</script>
 <?= $this->endSection(); ?>

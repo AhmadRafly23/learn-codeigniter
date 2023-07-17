@@ -3,21 +3,42 @@
 <?= $this->section("content"); ?>
 <div class="p-6 w-2/5">
     <form action="/comic/save" method="post" class="space-y-4">
+        <?= csrf_field(); ?>
         <div class="flex justify-between items-center">
-            <label for="">Title :</label>
-            <input type="text" id="title" name="title" placeholder="Type here" class="input input-bordered w-full max-w-sm" />
+            <label for="title">Title :</label>
+            <div class="w-full max-w-sm">
+                <input type="text" id="title" name="title" placeholder="Example: Naruto" class="input input-bordered w-full" autofocus value="<?= old("title"); ?>" />
+                <?php if ($validation && $validation->getError("title")) : ?>
+                    <span class="text-red-500 text-xs italic mt-1"><?= $validation->getError("title"); ?></span>
+                <?php endif; ?>
+            </div>
         </div>
         <div class="flex justify-between items-center">
-            <label for="">Author :</label>
-            <input type="text" id="author" name="author" placeholder="Type here" class="input input-bordered w-full max-w-sm" />
+            <label for="author">Author :</label>
+            <div class="w-full max-w-sm">
+                <input type="text" id="author" name="author" placeholder="Example: Masashi Kishimoto" class="input input-bordered w-full" value="<?= old("author"); ?>" />
+                <?php if ($validation && $validation->getError("author")) : ?>
+                    <span class="text-red-500 text-xs italic mt-1"><?= $validation->getError("author"); ?></span>
+                <?php endif; ?>
+            </div>
         </div>
         <div class="flex justify-between items-center">
-            <label for="">Publisher :</label>
-            <input type="text" id="publisher" name="publisher" placeholder="Type here" class="input input-bordered w-full max-w-sm" />
+            <label for="publisher">Publisher :</label>
+            <div class="w-full max-w-sm">
+                <input type="text" id="publisher" name="publisher" placeholder="Example: Shounen Jump" class="input input-bordered w-full" value="<?= old("publisher"); ?>" />
+                <?php if ($validation && $validation->getError("publisher")) : ?>
+                    <span class="text-red-500 text-xs italic mt-1"><?= $validation->getError("publisher"); ?></span>
+                <?php endif; ?>
+            </div>
         </div>
         <div class="flex justify-between items-center">
-            <label for="">Cover :</label>
-            <input type="text" id="cover" name="cover" placeholder="Type here" class="input input-bordered w-full max-w-sm" />
+            <label for="cover">Cover :</label>
+            <div class="w-full max-w-sm">
+                <input type="text" id="cover" name="cover" placeholder="Type here" class="input input-bordered w-full" value="<?= old("cover"); ?>" />
+                <?php if ($validation && $validation->getError("cover")) : ?>
+                    <span class="text-red-500 text-xs italic mt-1"><?= $validation->getError("cover"); ?></span>
+                <?php endif; ?>
+            </div>
         </div>
         <button type="submit" class="btn btn-outline text-blue-700 hover:bg-blue-700 hover:border-blue-700">Submit</button>
     </form>

@@ -54,9 +54,12 @@ class Dashboard extends BaseController
 
     public function create()
     {
+        $validation = session()->getFlashdata("error");
+
         $data = [
             'header' => 'Comics App | Create',
-            "name" => "Create Comic"
+            "name" => "Create Comic",
+            "validation" => $validation
         ];
 
         return view("dashboard/create", $data);
@@ -64,6 +67,18 @@ class Dashboard extends BaseController
 
     public function save()
     {
+        if (!$this->validate([
+            "title" => "required|is_unique[comic.title]",
+            "author" => "required",
+            "publisher" => "required",
+            "cover" => "required"
+        ])) {
+            $validation = \Config\Services::validation();
+
+            session()->setFlashdata('error', $validation);
+            return redirect()->back()->withInput()->with("validation", $validation);
+        }
+
         $this->comicModel->save([
             "title" => $this->request->getVar("title"),
             "slug" => url_title($this->request->getVar("title"), "-", true),
@@ -73,6 +88,15 @@ class Dashboard extends BaseController
         ]);
 
         session()->setFlashdata("flash", "disimpan");
+
+        return redirect()->to("/comic");
+    }
+
+    public function delete($id)
+    {
+        $this->comicModel->delete($id);
+
+        session()->setFlashdata("flash", "dihapus");
 
         return redirect()->to("/comic");
     }

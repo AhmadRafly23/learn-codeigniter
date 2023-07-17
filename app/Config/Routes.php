@@ -33,7 +33,8 @@ $routes->get("/", "Dashboard::index");
 $routes->get("/comic", "Dashboard::comic");
 $routes->get("/comic/create", "Dashboard::create");
 $routes->post("/comic/save", "Dashboard::save");
-$routes->get("/comic/(:segment)", "Dashboard::detail/$1");
+$routes->delete("/comic/(:num)", "Dashboard::delete/$1");
+$routes->get("/comic/(:any)", "Dashboard::detail/$1");
 
 /*
  * --------------------------------------------------------------------
