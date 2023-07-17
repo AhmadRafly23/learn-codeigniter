@@ -10,7 +10,7 @@
     const buttonClick = document.querySelector('.tombol');
 
     buttonClick.addEventListener('click', function() {
-        alertText.innerHTML = `Data berhasil <?= $name; ?>`;
+
         alert.classList.add("translate-y-0", "mt-4")
 
         return setTimeout(() => {
