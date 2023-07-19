@@ -11,7 +11,7 @@
                 <p class="text-sm text-gray-400"><strong>Penerbit :</strong> <?= $comic["publisher"]; ?></p>
             </div>
             <div class="space-x-1">
-                <a href="" class="btn btn-warning text-white border-none">Edit</a>
+                <a href="/comic/edit/<?= $comic["slug"]; ?>" class="btn btn-warning text-white border-none">Edit</a>
 
                 <form action="/comic/<?= $comic["id"]; ?>" method="post" class="inline">
                     <?= csrf_field(); ?>

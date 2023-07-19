@@ -100,4 +100,54 @@ class Dashboard extends BaseController
 
         return redirect()->to("/comic");
     }
+
+    public function edit($slug)
+    {
+        $validation = session()->getFlashdata("error");
+
+        $data = [
+            'header' => 'Comics App | Edit',
+            "name" => "Edit Comic",
+            "validation" => $validation,
+            "comic" => $this->comicModel->getComic($slug)
+        ];
+
+        return view("dashboard/edit", $data);
+    }
+
+    public function update($id)
+    {
+        $oldComic = $this->comicModel->getComic($this->request->getVar("slug"));
+
+        if ($oldComic["title"] == $this->request->getVar("title")) {
+            $rule_title = "required";
+        } else {
+            $rule_title = "required|is_unique[comic.title]";
+        }
+
+        if (!$this->validate([
+            "title" => $rule_title,
+            "author" => "required",
+            "publisher" => "required",
+            "cover" => "required"
+        ])) {
+            $validation = \Config\Services::validation();
+
+            session()->setFlashdata('error', $validation);
+            return redirect()->back()->withInput()->with("validation", $validation);
+        }
+
+        $this->comicModel->save([
+            "id" => $id,
+            "title" => $this->request->getVar("title"),
+            "slug" => url_title($this->request->getVar("title"), "-", true),
+            "author" => $this->request->getVar("author"),
+            "publisher" => $this->request->getVar("publisher"),
+            "cover" => $this->request->getVar("cover")
+        ]);
+
+        session()->setFlashdata("flash", "diubah");
+
+        return redirect()->to("/comic");
+    }
 }
