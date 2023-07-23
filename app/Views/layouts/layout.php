@@ -70,6 +70,14 @@
     const dashboard = document.querySelectorAll(".dashboard");
     const comic = document.querySelectorAll(".comic");
 
+    //variable for handle input file
+    const imgPreview = document.querySelector(".img-preview");
+    const containerFile = document.querySelector(".container-file");
+    const cover = document.getElementById('cover');
+    const fileInputLabel = document.getElementById(
+        'file-input-label',
+    );
+
     const checkSize = () => {
         let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
@@ -103,6 +111,32 @@
     }
 
     activeMenu();
+
+    //function for handle input file
+    cover?.addEventListener('change', () => {
+        if (cover.value === null || cover.value === '') {
+            fileInputLabel.innerHTML = 'Select a file';
+        } else {
+            const realPathArray = cover.value.split('\\');
+
+            fileInputLabel.innerHTML =
+                realPathArray[realPathArray.length - 1];
+        }
+    });
+
+    cover?.addEventListener("change", () => {
+        const fileCover = new FileReader();
+        fileCover.readAsDataURL(cover.files[0]);
+
+        fileCover.onload = (e) => {
+            containerFile.classList.add("outline", "outline-2", "outline-offset-2", "outline-slate-400/20");
+            imgPreview.src = e.target.result;
+        }
+    })
+
+    cover?.addEventListener("blur", () => {
+        containerFile.classList.remove("outline", "outline-2", "outline-offset-2", "outline-slate-400/20");
+    })
 </script>
 
 </html>

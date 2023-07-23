@@ -2,8 +2,8 @@
 
 <?= $this->section("content"); ?>
 <div class="flex h-full justify-center items-center p-6">
-    <div class="w-full md:w-1/3 card card-side bg-base-100 shadow-xl">
-        <figure><img class="w-56" src="<?= $comic["cover"]; ?>" alt="Movie" /></figure>
+    <div class="w-full md:w-1/3 card card-side bg-base-100 border border-gray-100 shadow-xl p-8">
+        <figure><img class="w-56" src="/img/<?= $comic["cover"]; ?>" alt="Movie" /></figure>
         <div class="p-5 flex flex-col justify-between">
             <div class="space-y-4">
                 <h2 class="card-title"><?= $comic["title"]; ?></h2>

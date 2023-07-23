@@ -54,12 +54,9 @@ class Dashboard extends BaseController
 
     public function create()
     {
-        $validation = session()->getFlashdata("error");
-
         $data = [
             'header' => 'Comics App | Create',
             "name" => "Create Comic",
-            "validation" => $validation
         ];
 
         return view("dashboard/create", $data);
@@ -71,20 +68,24 @@ class Dashboard extends BaseController
             "title" => "required|is_unique[comic.title]",
             "author" => "required",
             "publisher" => "required",
-            "cover" => "required"
+            "cover" => "uploaded[cover]|max_size[cover, 1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]"
         ])) {
-            $validation = \Config\Services::validation();
 
-            session()->setFlashdata('error', $validation);
-            return redirect()->back()->withInput()->with("validation", $validation);
+            return redirect()->to("/comic/create")->withInput()->with("validation", $this->validator->getErrors());
         }
+
+        $fileCover = $this->request->getFile("cover");
+
+        $nameCover = $fileCover->getRandomName();
+
+        $fileCover->move("img", $nameCover);
 
         $this->comicModel->save([
             "title" => $this->request->getVar("title"),
             "slug" => url_title($this->request->getVar("title"), "-", true),
             "author" => $this->request->getVar("author"),
             "publisher" => $this->request->getVar("publisher"),
-            "cover" => $this->request->getVar("cover")
+            "cover" => $nameCover
         ]);
 
         session()->setFlashdata("flash", "disimpan");
@@ -94,6 +95,10 @@ class Dashboard extends BaseController
 
     public function delete($id)
     {
+        $comic = $this->comicModel->find($id);
+
+        unlink("img/" . $comic["cover"]);
+
         $this->comicModel->delete($id);
 
         session()->setFlashdata("flash", "dihapus");
@@ -103,12 +108,9 @@ class Dashboard extends BaseController
 
     public function edit($slug)
     {
-        $validation = session()->getFlashdata("error");
-
         $data = [
             'header' => 'Comics App | Edit',
             "name" => "Edit Comic",
-            "validation" => $validation,
             "comic" => $this->comicModel->getComic($slug)
         ];
 
@@ -129,12 +131,20 @@ class Dashboard extends BaseController
             "title" => $rule_title,
             "author" => "required",
             "publisher" => "required",
-            "cover" => "required"
+            "cover" => "uploaded[cover]|max_size[cover, 1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]"
         ])) {
-            $validation = \Config\Services::validation();
 
-            session()->setFlashdata('error', $validation);
-            return redirect()->back()->withInput()->with("validation", $validation);
+            return redirect()->to("/comic/edit")->withInput()->with("validation", $this->validator->getErrors());
+        }
+
+        $fileCover = $this->request->getFile("cover");
+
+        if ($fileCover->getError() == 4) {
+            $nameCover = $this->request->getVar("oldCover");
+        } else {
+            $nameCover = $fileCover->getRandomName();
+            $fileCover->move("img", $nameCover);
+            unlink("img/" . $this->request->getVar("oldCover"));
         }
 
         $this->comicModel->save([
@@ -143,7 +153,7 @@ class Dashboard extends BaseController
             "slug" => url_title($this->request->getVar("title"), "-", true),
             "author" => $this->request->getVar("author"),
             "publisher" => $this->request->getVar("publisher"),
-            "cover" => $this->request->getVar("cover")
+            "cover" => $nameCover
         ]);
 
         session()->setFlashdata("flash", "diubah");
